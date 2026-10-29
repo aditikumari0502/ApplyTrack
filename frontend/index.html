@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ApplyTrack | Job Application Manager</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <div class="app-shell">
+
+    <!-- ============ SIDEBAR ============ -->
+    <aside class="sidebar">
+      <div class="brand"><span class="brand-mark">A</span><span>ApplyTrack</span></div>
+      <p class="sidebar-caption">YOUR CAREER WORKSPACE</p>
+
+      <nav class="nav" aria-label="Main navigation">
+        <a class="nav-link active" href="#dashboard" data-page="dashboard"><span>▦</span> Dashboard</a>
+        <a class="nav-link" href="#applications" data-page="applications"><span>▤</span> Applications</a>
+        <a class="nav-link" href="#eligibility" data-page="eligibility"><span>🎓</span> Eligibility Checker</a>
+      </nav>
+
+      <div class="sidebar-note">
+        <div class="note-icon">✦</div>
+        <h3>One step closer.</h3>
+        <p>Keep every opportunity organised and keep moving forward.</p>
+      </div>
+      <div class="sidebar-footer">Made for your next opportunity.</div>
+    </aside>
+
+    <!-- ============ MAIN ============ -->
+    <main class="main-content">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow" id="pageEyebrow">YOUR JOB SEARCH, IN ONE PLACE</p>
+          <h1 id="pageTitle">Application dashboard</h1>
+          <p class="page-subtitle" id="pageSubtitle">Track your applications. Celebrate every step.</p>
+        </div>
+        <button class="primary-button" id="addApplicationBtn" type="button">
+          <span aria-hidden="true">＋</span> Add application
+        </button>
+      </header>
+
+      <!-- Stats (Dashboard only) -->
+      <section class="stats-grid" data-view="dashboard" aria-label="Application statistics">
+        <article class="stat-card">
+          <div class="stat-icon purple">▤</div>
+          <p class="stat-label">Total applications</p>
+          <p class="stat-number" id="totalStat">0</p>
+          <p class="stat-foot">All opportunities tracked</p>
+        </article>
+        <article class="stat-card">
+          <div class="stat-icon blue">◷</div>
+          <p class="stat-label">In progress</p>
+          <p class="stat-number" id="progressStat">0</p>
+          <p class="stat-foot">Applied or assessment</p>
+        </article>
+        <article class="stat-card">
+          <div class="stat-icon orange">▣</div>
+          <p class="stat-label">Interviews</p>
+          <p class="stat-number" id="interviewStat">0</p>
+          <p class="stat-foot">Interview stage</p>
+        </article>
+        <article class="stat-card">
+          <div class="stat-icon green">✧</div>
+          <p class="stat-label">Offers</p>
+          <p class="stat-number" id="offerStat">0</p>
+          <p class="stat-foot">Potential wins</p>
+        </article>
+      </section>
+
+      <!-- Applications (Dashboard + Applications pages) -->
+      <section class="panel" id="applications" data-view="dashboard applications">
+        <div class="panel-heading">
+          <div>
+            <h2>Your applications</h2>
+            <p class="section-subtitle">A clear view of every role you are pursuing.</p>
+          </div>
+          <span class="count-pill" id="resultsCount">0 applications</span>
+        </div>
+
+        <div class="filters">
+          <label class="search-box">
+            <span aria-hidden="true">⌕</span>
+            <input id="searchInput" type="search" placeholder="Search company, role, or notes" aria-label="Search applications">
+          </label>
+          <select id="statusFilter" aria-label="Filter by status">
+            <option value="">All statuses</option>
+            <option>Applied</option>
+            <option>Assessment</option>
+            <option>Interview</option>
+            <option>Offer</option>
+            <option>Rejected</option>
+          </select>
+          <select id="modeFilter" aria-label="Filter by work mode">
+            <option value="">All work modes</option>
+            <option>Remote</option>
+            <option>Hybrid</option>
+            <option>On-site</option>
+          </select>
+        </div>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>COMPANY &amp; ROLE</th>
+                <th>WORK MODE</th>
+                <th>STATUS</th>
+                <th>APPLIED ON</th>
+                <th>FOLLOW-UP</th>
+                <th>JOB LINK</th>
+                <th>ACTIONS</th>
+              </tr>
+            </thead>
+            <tbody id="applicationsTable"></tbody>
+          </table>
+
+          <div class="empty-state" id="emptyState" hidden>
+            <div class="empty-illustration">▤</div>
+            <h3>No applications found</h3>
+            <p>Add a job or internship, or adjust your search and filters.</p>
+            <button class="secondary-button" id="emptyAddBtn" type="button">＋ Add application</button>
+          </div>
+        </div>
+
+        <p class="panel-footnote"><span class="status-dot"></span> Connected to your local ApplyTrack backend</p>
+      </section>
+
+      <!-- Eligibility checker (own page) -->
+      <section class="panel" id="eligibility" data-view="eligibility" hidden>
+        <div class="panel-heading">
+          <div>
+            <h2>Placement Eligibility Checker</h2>
+            <p class="section-subtitle">Enter your academic details to check your eligibility.</p>
+          </div>
+        </div>
+
+        <div class="eligibility-grid">
+          <div class="eligibility-card">
+            <h3>My academic profile</h3>
+
+            <label class="form-field">
+              <span>Class 10th percentage</span>
+              <input id="student10th" type="number" min="0" max="100" step="0.01" placeholder="e.g. 82">
+            </label>
+            <label class="form-field">
+              <span>Class 12th percentage</span>
+              <input id="student12th" type="number" min="0" max="100" step="0.01" placeholder="e.g. 76">
+            </label>
+            <label class="form-field">
+              <span>College CGPA (out of 10)</span>
+              <input id="studentCgpa" type="number" min="0" max="10" step="0.01" placeholder="e.g. 8.0">
+            </label>
+            <label class="form-field">
+              <span>Active backlogs</span>
+              <input id="studentBacklogs" type="number" min="0" step="1" placeholder="e.g. 0">
+            </label>
+          </div>
+
+          <div class="eligibility-card muted-card">
+            <h3>Sample placement criteria</h3>
+            <p class="section-subtitle">Eligibility is checked against these sample rules. Real company criteria may differ.</p>
+            <ul class="criteria-list">
+              <li>Class 10th: minimum 70%</li>
+              <li>Class 12th: minimum 70%</li>
+              <li>College CGPA: minimum 7.0</li>
+              <li>Active backlogs: not allowed</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="eligibility-actions">
+          <button class="primary-button" id="checkEligibilityBtn" type="button">Check eligibility</button>
+        </div>
+        <p id="eligibilityResult" class="eligibility-result" role="status" aria-live="polite"></p>
+      </section>
+
+      <footer class="page-footer">ApplyTrack <span>•</span> Keep going. Your next opportunity is out there.</footer>
+    </main>
+  </div>
+
+  <!-- ============ ADD / EDIT MODAL ============ -->
+  <div class="modal-backdrop" id="modalBackdrop" aria-hidden="true">
+    <section class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <div class="modal-header">
+        <div>
+          <p class="eyebrow" id="modalEyebrow">NEW OPPORTUNITY</p>
+          <h2 id="modalTitle">Add application</h2>
+          <p class="section-subtitle">Enter the details you want to remember.</p>
+        </div>
+        <button class="icon-button" id="closeModalBtn" type="button" aria-label="Close form">×</button>
+      </div>
+
+      <form id="applicationForm" novalidate>
+        <input type="hidden" id="applicationId">
+
+        <div class="form-grid">
+          <label class="form-field">
+            <span>Company name <b>*</b></span>
+            <input id="companyName" name="companyName" required maxlength="120" placeholder="e.g. TCS">
+          </label>
+          <label class="form-field">
+            <span>Job role <b>*</b></span>
+            <input id="roleTitle" name="roleTitle" required maxlength="120" placeholder="e.g. Java Intern">
+          </label>
+          <label class="form-field">
+            <span>Work mode</span>
+            <select id="workMode" name="workMode">
+              <option value="">Select work mode</option>
+              <option>Remote</option>
+              <option>Hybrid</option>
+              <option>On-site</option>
+            </select>
+          </label>
+          <label class="form-field">
+            <span>Application status <b>*</b></span>
+            <select id="applicationStatus" name="applicationStatus" required>
+              <option>Applied</option>
+              <option>Assessment</option>
+              <option>Interview</option>
+              <option>Offer</option>
+              <option>Rejected</option>
+            </select>
+          </label>
+          <label class="form-field">
+            <span>Date applied</span>
+            <input id="appliedDate" name="appliedDate" type="date">
+          </label>
+          <label class="form-field">
+            <span>Follow-up date</span>
+            <input id="followUpDate" name="followUpDate" type="date">
+          </label>
+          <label class="form-field full-width">
+            <span>Job / internship link</span>
+            <input id="jobUrl" name="jobUrl" type="url" placeholder="https://example.com/careers">
+          </label>
+          <label class="form-field full-width">
+            <span>Notes</span>
+            <textarea id="notes" name="notes" rows="3" maxlength="1000" placeholder="Contact person, next steps, or anything to remember"></textarea>
+          </label>
+        </div>
+
+        <p class="form-error" id="formError" role="alert" hidden></p>
+
+        <div class="modal-actions">
+          <button class="secondary-button" id="cancelBtn" type="button">Cancel</button>
+          <button class="primary-button" id="saveApplicationBtn" type="submit">Save application</button>
+        </div>
+      </form>
+    </section>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+</body>
+</html>
